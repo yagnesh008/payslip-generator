@@ -25,10 +25,12 @@ export async function POST(request: NextRequest) {
     }
 
     // Calculate totals
-    const grossEarnings = body.earnings.reduce((sum, item) => sum + (item.amount || 0), 0);
-    const totalDeductions = body.deductions.reduce((sum, item) => sum + (item.amount || 0), 0);
-    const netSalary = grossEarnings - totalDeductions;
-    const netSalaryInWords = numberToWords(netSalary);
+    const round2 = (n: number) => Math.round((n + Number.EPSILON) * 100) / 100;
+
+    const grossEarnings = round2(body.earnings.reduce((sum, item) => sum + (item.amount || 0), 0));
+    const totalDeductions = round2(body.deductions.reduce((sum, item) => sum + (item.amount || 0), 0));
+    const netSalary = round2(grossEarnings - totalDeductions);
+    const netSalaryInWords = (numberToWords(netSalary));
 
     return NextResponse.json(
       {

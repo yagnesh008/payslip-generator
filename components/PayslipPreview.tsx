@@ -2,6 +2,7 @@
 'use client';
 
 import React from 'react';
+import { formatINR } from '@/lib/format';
 import { PayslipTemplate } from '@/types';
 import { formatDate, formatIndianCurrency } from '@/lib/utils';
 

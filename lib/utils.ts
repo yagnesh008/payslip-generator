@@ -75,20 +75,10 @@ export function numberToWords(num: number): string {
 
 // Format amount to Indian currency format (e.g., 25,00,000.00)
 export function formatIndianCurrency(amount: number): string {
-  const parts = amount.toString().split('.');
-  const integerPart = parts[0];
-  const decimalPart = parts[1] || '00';
-
-  // Add commas in Indian style: 10,00,000
-  const lastThree = integerPart.slice(-3);
-  const remaining = integerPart.slice(0, -3);
-
-  if (remaining === '') {
-    return integerPart + '.' + decimalPart.padEnd(2, '0');
-  }
-
-  const formatted = remaining.replace(/\B(?=(\d{2})+(?!\d))/g, ',') + ',' + lastThree;
-  return formatted + '.' + decimalPart.padEnd(2, '0');
+  return (Number(amount) || 0).toLocaleString('en-IN', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2,
+  });
 }
 
 // Validate email format
